@@ -146,3 +146,9 @@ sprites.onOverlap(SpriteKind.Goat, SpriteKind.StackGoat, function(theDroppedGoat
     scene.cameraFollowSprite(topGoat)
     createNewGoat()  
 })
+scene.onHitWall(SpriteKind.Goat, function(sprite: Sprite, location: tiles.Location) {
+   if (sprite.isHittingTile(CollisionDirection.Bottom)){
+       sprite.destroy(effects.disintegrate, 100)
+        
+   }
+})
