@@ -111,12 +111,38 @@ let baseGoat = sprites.create(goatImgs[randint(0,goatImgs.length -1)], SpriteKin
 baseGoat.setPosition(80,600)
 baseGoat.ay = 100
 scene.cameraFollowSprite(baseGoat)
-
+let topGoat = baseGoat
 let newGoat: Sprite = null
 createNewGoat()
 function createNewGoat(){
     newGoat = sprites.create(goatImgs[randint(0,goatImgs.length -1)], SpriteKind.Goat)
-    newGoat.setPosition(baseGoat.x, baseGoat.y - 20)
-    newGoat.vx = 50
+    newGoat.setPosition(randint(20, 140), topGoat.y - 20)
+    
+    
+    if(Math.percentChance(50)){
+        newGoat.vx = randint(50, 100)
+
+    }
+
+    else{
+        newGoat.vx = randint(-100, -50)
+
+    }
     newGoat.setFlag(SpriteFlag.BounceOnWall, true)
+
 }
+
+controller.A.onEvent(ControllerButtonEvent.Pressed, function() {
+    newGoat.ay = 300
+    newGoat.vx = 0
+
+})
+
+sprites.onOverlap(SpriteKind.Goat, SpriteKind.StackGoat, function(theDroppedGoat: Sprite, theStackedGoat: Sprite) {
+    theDroppedGoat.ay = 0
+    theDroppedGoat.vy = 0
+    theDroppedGoat.setKind(SpriteKind.StackGoat)
+    topGoat = theDroppedGoat
+    scene.cameraFollowSprite(topGoat)
+    createNewGoat()  
+})
