@@ -242,7 +242,7 @@ function createGoat(){
 
     newGoat = sprites.create(goatImgs[randint(0, goatImgs.length - 1)], SpriteKind.Goat)
 
-    newGoat.setPosition(randint(20, 140), topGoat.y - 30)
+    newGoat.setPosition(randint(20, 140), topGoat.y - 35)
 
     if (Math.percentChance(50)){
 
@@ -291,7 +291,7 @@ sprites.onOverlap(SpriteKind.StackGoat, SpriteKind.Goat, function(sprite: Sprite
         topGoat = droppedGoat
 
         scene.cameraFollowSprite(topGoat)
-
+        info.startCountdown(5)
  
 
         if (theStackWillFall()){
@@ -407,6 +407,15 @@ function knockOverStack(){
 }
 
  
+info.onLifeZero(function() {
+    if (info.score() >= 49){
+        game.over(true) 
+        
+    }
+    else{
+        game.over(false)
+    }
+})
 
 scene.onHitWall(SpriteKind.Goat, function(sprite: Sprite, location: tiles.Location) {
 
